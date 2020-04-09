@@ -96,4 +96,4 @@ ENV/
 .ropeproject
 
 #Visual Studio settings
-.vs
+.vs/
