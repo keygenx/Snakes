@@ -1,6 +1,6 @@
 import numpy as np
 import pygame
-
+import sys
 from snakeai.agent import HumanAgent
 from snakeai.gameplay.entities import (CellType, SnakeAction, ALL_SNAKE_DIRECTIONS)
 
@@ -31,7 +31,6 @@ class PyGameGUI:
     def load_environment(self, environment):
         """ Load the RL environment into the GUI. """
         self.env = environment
-        print(self.env.field.size_x)
         screen_size = (self.env.field.size_x * self.CELL_SIZE, self.env.field.size_y * self.CELL_SIZE)
         self.screen = pygame.display.set_mode(screen_size)
         self.screen.fill(Colors.SCREEN_BACKGROUND)
@@ -85,8 +84,10 @@ class PyGameGUI:
 
         try:
             for episode in range(num_episodes):
-                self.run_episode()
+                if self.run_episode() is not None: #not None when escape is pressed
+                    break
                 pygame.time.wait(1500)
+            pygame.quit()
         except QuitRequestedError:
             pass
 
@@ -112,10 +113,11 @@ class PyGameGUI:
                     if is_human_agent and event.key in self.SNAKE_CONTROL_KEYS:
                         action = self.map_key_to_snake_action(event.key)
                     if event.key == pygame.K_ESCAPE:
-                        raise QuitRequestedError
+                        return -1
 
                 if event.type == pygame.QUIT:
-                    raise QuitRequestedError
+                    running = False
+                    break
 
             # Update game state.
             timestep_timed_out = self.timestep_watch.time() >= timestep_delay
@@ -131,8 +133,8 @@ class PyGameGUI:
                 timestep_result = self.env.timestep()
 
                 if timestep_result.is_episode_end:
-                    self.agent.end_episode()
                     running = False
+                    
 
             # Render.
             self.render()
