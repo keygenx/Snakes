@@ -1,0 +1,5 @@
+{
+  "Interpreter": "CondaEnv|CondaEnv|Anaconda3",
+  "SuppressPackageInstallationPrompt": true,
+  "SuppressConfigureTestFrameworkPrompt": "true"
+}
