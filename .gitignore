@@ -3,6 +3,9 @@
 **/*.model
 **/*.csv
 **/*.log
+debug_stats/
+saved_model/
+debug_log/
 
 
 # Byte-compiled / optimized / DLL files
