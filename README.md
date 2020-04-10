@@ -1,5 +1,5 @@
 To get started open Anaconda command prompt<br />
-Do <br />
+Run the following commands: <br />
 pip install pygame <br />
 pip install pytest <br />
 <br /><br />
